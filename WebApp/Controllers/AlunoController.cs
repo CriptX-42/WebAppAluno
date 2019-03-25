@@ -18,9 +18,10 @@ namespace WebApp.Controllers
         }
 
         // GET: api/Aluno/5
-        public string Get(int id)
+        public Alunos Get(int id)
         {
-            return "";
+            Alunos aluno = new Alunos();
+            return aluno.listaAlunos().Where(x => x.id == id).FirstOrDefault();
         }
 
         // POST: api/Aluno
