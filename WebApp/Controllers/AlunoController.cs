@@ -11,16 +11,16 @@ namespace WebApp.Controllers
     public class AlunoController : ApiController
     {
         // GET: api/Aluno
-        public IEnumerable<string> Get()
+        public IEnumerable<Alunos> Get()
         {
-            return new string[] { "value1", "value2" };
+            Alunos aluno = new Alunos();
+            return aluno.listaAlunos();
         }
 
         // GET: api/Aluno/5
         public string Get(int id)
         {
-            Alunos aluno = new Alunos();
-            return aluno.listaAlunos();
+            return "";
         }
 
         // POST: api/Aluno
