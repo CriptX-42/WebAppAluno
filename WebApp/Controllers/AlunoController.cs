@@ -14,14 +14,14 @@ namespace WebApp.Controllers
         public IEnumerable<Alunos> Get()
         {
             Alunos aluno = new Alunos();
-            return aluno.listaAlunos();
+            return aluno.ListarAlunos();
         }
 
         // GET: api/Aluno/5
         public Alunos Get(int id)
         {
             Alunos aluno = new Alunos();
-            return aluno.listaAlunos().Where(x => x.id == id).FirstOrDefault();
+            return aluno.ListarAlunos().Where(x => x.id == id).FirstOrDefault();
         }
 
         // POST: api/Aluno
