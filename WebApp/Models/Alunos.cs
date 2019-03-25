@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 
 namespace WebApp.Models
 {
@@ -15,24 +18,11 @@ namespace WebApp.Models
 
         public List<Alunos> listaAlunos()
         {
-            Alunos aluno = new Alunos();
-            aluno.id = 1;
-            aluno.nome = "Letícia";
-            aluno.sobrenome = "Sena";
-            aluno.telefone = "1234";
-            aluno.ra = 12344321;
+            var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
 
-            Alunos aluno1 = new Alunos();
-            aluno1.id = 2;
-            aluno1.nome = "Ricardo";
-            aluno1.sobrenome = "Carvalho";
-            aluno1.telefone = "321";
-            aluno1.ra = 321;
+            var json = File.ReadAllText(caminhoArquivo);
 
-            List<Alunos> listaAlunos = new List<Alunos>();
-
-            listaAlunos.Add(aluno);
-            listaAlunos.Add(aluno1);
+            var listaAlunos = JsonConvert.DeserializeObject<List<Alunos>>(json);
 
             return listaAlunos;
         }
