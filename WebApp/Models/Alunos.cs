@@ -8,7 +8,7 @@ using System.Web.Hosting;
 
 namespace WebApp.Models
 {
-    public class Alunos
+    public class Aluno
     {
         public int id { get; set; }
         public string nome { get; set; }
@@ -20,13 +20,13 @@ namespace WebApp.Models
         /// deserializa e converte o json para passar a uma lista de alunos.
         /// </summary>
         /// <returns></returns>
-        public List<Alunos> ListarAlunos()
+        public List<Aluno> ListarAlunos()
         {
             var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
 
             var json = File.ReadAllText(caminhoArquivo);
 
-            var listaAlunos = JsonConvert.DeserializeObject<List<Alunos>>(json);
+            var listaAlunos = JsonConvert.DeserializeObject<List<Aluno>>(json);
 
             return listaAlunos;
         }
@@ -37,7 +37,7 @@ namespace WebApp.Models
         /// </summary>
         /// <param name="listaAlunos"></param>
         /// <returns></returns>
-        public bool ReescreverArquivos(List<Alunos> listaAlunos)
+        public bool ReescreverArquivos(List<Aluno> listaAlunos)
         {
             var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
 
@@ -52,7 +52,7 @@ namespace WebApp.Models
         /// </summary>
         /// <param name="Aluno"></param>
         /// <returns></returns>
-        public Alunos Inserir(Alunos Aluno)
+        public Aluno Inserir(Aluno Aluno)
         {
             var listaAlunos = this.ListarAlunos();
 
@@ -70,7 +70,7 @@ namespace WebApp.Models
         /// <param name="id"></param>
         /// <param name="Aluno"></param>
         /// <returns></returns>
-        public Alunos Atualizar(int id, Alunos Aluno)
+        public Aluno Atualizar(int id, Aluno Aluno)
         {
             var listaAlunos = this.ListarAlunos();
 
@@ -89,6 +89,11 @@ namespace WebApp.Models
             return Aluno;
         }
 
+        /// <summary>
+        /// Delentado aluno passando o paramentro do ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool Deletar(int id)
         {
             var listaAlunos = this.ListarAlunos();
