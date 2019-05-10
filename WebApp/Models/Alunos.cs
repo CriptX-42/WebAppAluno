@@ -8,25 +8,26 @@ using System.Web.Hosting;
 
 namespace WebApp.Models
 {
-    public class Aluno
+    public class Alunos
     {
         public int id { get; set; }
         public string nome { get; set; }
         public string sobrenome { get; set; }
         public string telefone { get; set; }
         public int ra { get; set; }
+        public string descricao { get; set; }
 
         /// <summary>
         /// deserializa e converte o json para passar a uma lista de alunos.
         /// </summary>
         /// <returns></returns>
-        public List<Aluno> ListarAlunos()
+        public List<Alunos> ListarAlunos()
         {
             var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
 
             var json = File.ReadAllText(caminhoArquivo);
 
-            var listaAlunos = JsonConvert.DeserializeObject<List<Aluno>>(json);
+            var listaAlunos = JsonConvert.DeserializeObject<List<Alunos>>(json);
 
             return listaAlunos;
         }
@@ -75,7 +76,7 @@ namespace WebApp.Models
             var listaAlunos = this.ListarAlunos();
 
             var itemIndex = listaAlunos.FindIndex(p => p.id == id); //se ele encontrar num index o aluno que estou passando (ID)
-            if(itemIndex >= 0)
+            if (itemIndex >= 0)
             {
                 Aluno.id = id;
                 listaAlunos[itemIndex] = Aluno; //substitui alguma propriedade do aluno com um objeto que estou enviando
@@ -99,7 +100,7 @@ namespace WebApp.Models
             var listaAlunos = this.ListarAlunos();
 
             var itemIndex = listaAlunos.FindIndex(p => p.id == id);
-            if(itemIndex >= 0)
+            if (itemIndex >= 0)
             {
                 listaAlunos.RemoveAt(itemIndex);
             }
@@ -110,6 +111,6 @@ namespace WebApp.Models
             ReescreverArquivos(listaAlunos);
             return true;
 
-        } 
+        }
     }
 }
