@@ -14,6 +14,7 @@ namespace WebApp.Models
         public string nome { get; set; }
         public string sobrenome { get; set; }
         public string telefone { get; set; }
+        public string data { get; set; }
         public int ra { get; set; }
         public string descricao { get; set; }
 
@@ -38,7 +39,7 @@ namespace WebApp.Models
         /// </summary>
         /// <param name="listaAlunos"></param>
         /// <returns></returns>
-        public bool ReescreverArquivos(List<Aluno> listaAlunos)
+        public bool ReescreverArquivos(List<Alunos> listaAlunos)
         {
             var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
 
@@ -53,7 +54,7 @@ namespace WebApp.Models
         /// </summary>
         /// <param name="Aluno"></param>
         /// <returns></returns>
-        public Aluno Inserir(Aluno Aluno)
+        public Alunos Inserir(Alunos Aluno)
         {
             var listaAlunos = this.ListarAlunos();
 
@@ -71,7 +72,7 @@ namespace WebApp.Models
         /// <param name="id"></param>
         /// <param name="Aluno"></param>
         /// <returns></returns>
-        public Aluno Atualizar(int id, Aluno Aluno)
+        public Alunos Atualizar(int id, Alunos Aluno)
         {
             var listaAlunos = this.ListarAlunos();
 
