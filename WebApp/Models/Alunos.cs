@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -32,6 +34,18 @@ namespace WebApp.Models
 
             return listaAlunos;
         }
+        public string stringConexao = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=~/App_Data/Database.mdf;Integrated Security=True";
+        public IDbConnection conexao;
+
+        public List<Alunos> listarAlunosDB()
+        {
+            conexao = new SqlConnection(stringConexao);
+            var listaAlunos = new List<Alunos>();
+
+
+            return listaAlunos;
+        }
+
 
         /// <summary>
         /// Serializable
