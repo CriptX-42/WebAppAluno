@@ -21,7 +21,7 @@ namespace WebApp.Controllers
             try
             {
                 Alunos aluno = new Alunos();
-                return Ok(aluno.ListarAlunos());
+                return Ok(aluno.listarAlunos());
             }
             catch (Exception ex)
             {
@@ -37,17 +37,17 @@ namespace WebApp.Controllers
         public Alunos Get(int id)
         {
             Alunos aluno = new Alunos();
-            return aluno.ListarAlunos().Where(x => x.id == id).FirstOrDefault();
+            return aluno.listarAlunos().Where(x => x.id == id).FirstOrDefault();
         }
 
         [HttpGet]
-        [Route(@"RecuperarPorDataNome/{data:regex([0-9][4]\-[0-9][2])}/{nome:minlength(5)}")]
+        [Route(@"RecuperarPorDataNome/{data:regex([0-9]{4}\-[0-9]{2})}/{nome:minlength(3)}")]
         public IHttpActionResult Recuperar(string data, string nome)
         {
             try
             {
                 Alunos aluno = new Alunos();
-                IEnumerable<Alunos> alunos = aluno.ListarAlunos().Where(x => x.data == data || x.nome == nome);
+                IEnumerable<Alunos> alunos = aluno.listarAlunos().Where(x => x.data == data && x.nome == nome);
                 if (!alunos.Any())
                 {
                     return NotFound();
@@ -64,20 +64,23 @@ namespace WebApp.Controllers
 
         public List<Alunos> Post(Alunos aluno)
         {
-            List<Alunos> alunos = new List<Alunos>();
-            alunos.Add(aluno);
-
-            return alunos;
+            Alunos _aluno = new Alunos();
+            _aluno.Inserir(aluno);
+            return _aluno.listarAlunos();
         }
 
         // PUT: api/Aluno/5
-        public void Put(int id, [FromBody]string value)
+        public Alunos Put(int id, [FromBody]Alunos aluno)
         {
+            Alunos _aluno = new Alunos();
+            return _aluno.Atualizar(id, aluno);
         }
 
         // DELETE: api/Aluno/5
         public void Delete(int id)
         {
+            Alunos _aluno = new Alunos();
+            _aluno.Deletar(id);
         }
     }
 }

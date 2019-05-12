@@ -22,7 +22,7 @@ namespace WebApp.Models
         /// deserializa e converte o json para passar a uma lista de alunos.
         /// </summary>
         /// <returns></returns>
-        public List<Alunos> ListarAlunos()
+        public List<Alunos> listarAlunos()
         {
             var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
 
@@ -56,7 +56,7 @@ namespace WebApp.Models
         /// <returns></returns>
         public Alunos Inserir(Alunos Aluno)
         {
-            var listaAlunos = this.ListarAlunos();
+            var listaAlunos = this.listarAlunos();
 
             var maxId = listaAlunos.Max(aluno => aluno.id); // busca o maior ID na minha lista de alunos
             Aluno.id = maxId + +1;
@@ -74,7 +74,7 @@ namespace WebApp.Models
         /// <returns></returns>
         public Alunos Atualizar(int id, Alunos Aluno)
         {
-            var listaAlunos = this.ListarAlunos();
+            var listaAlunos = this.listarAlunos();
 
             var itemIndex = listaAlunos.FindIndex(p => p.id == id); //se ele encontrar num index o aluno que estou passando (ID)
             if (itemIndex >= 0)
@@ -98,18 +98,18 @@ namespace WebApp.Models
         /// <returns></returns>
         public bool Deletar(int id)
         {
-            var listaAlunos = this.ListarAlunos();
+            var listaAluno = this.listarAlunos();
 
-            var itemIndex = listaAlunos.FindIndex(p => p.id == id);
+            var itemIndex = listaAluno.FindIndex(p => p.id == id);
             if (itemIndex >= 0)
             {
-                listaAlunos.RemoveAt(itemIndex);
+                listaAluno.RemoveAt(itemIndex);
             }
             else
             {
                 return false;
             }
-            ReescreverArquivos(listaAlunos);
+            ReescreverArquivos(listarAlunos());
             return true;
 
         }
