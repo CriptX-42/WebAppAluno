@@ -73,7 +73,7 @@ namespace WebApp.Models
             try
             {
                 IDbCommand insertCmd = conexao.CreateCommand();
-                insertCmd.CommandText = "insert into Alunos (nome, sobrenome, telefone, ra, data, descricao) values (@nome, @sobrenome, @telefone, @ra, @data, @descricao)";
+                insertCmd.CommandText = "insert into Aluno (nome, sobrenome, telefone, ra, data, descricao) values (@nome, @sobrenome, @telefone, @ra, @data, @descricao)";
 
                 IDbDataParameter paramNome = new SqlParameter("nome", aluno.nome);
                 insertCmd.Parameters.Add(paramNome);
@@ -112,7 +112,7 @@ namespace WebApp.Models
             try
             {
                 IDbCommand UpdateCmd = conexao.CreateCommand();
-                UpdateCmd.CommandText = "Update Alunos SET nome = @nome, sobrenome = @sobrenome, telefone = @telefone, ra = @ra, data = @data, descricao = @descricao " +
+                UpdateCmd.CommandText = "Update Aluno SET nome = @nome, sobrenome = @sobrenome, telefone = @telefone, ra = @ra, data = @data, descricao = @descricao " +
                     "WHERE id = @id";
 
                 IDbDataParameter paramId = new SqlParameter("id", aluno.id);
@@ -155,7 +155,7 @@ namespace WebApp.Models
             try
             {
                 IDbCommand DeleteCmd = conexao.CreateCommand();
-                DeleteCmd.CommandText = "delete from Alunos where id = @id";
+                DeleteCmd.CommandText = "delete from Aluno where id = @id";
 
                 IDbDataParameter paramId = new SqlParameter("id", id);
                 DeleteCmd.Parameters.Add(paramId);
