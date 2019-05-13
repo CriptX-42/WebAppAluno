@@ -29,11 +29,11 @@ namespace WebApp.Models
                 IDbCommand selectCmd = conexao.CreateCommand();
                 if (id == null)
                 {
-                    selectCmd.CommandText = "select * from Alunos";
+                    selectCmd.CommandText = "select * from Aluno";
                 }
                 else
                 {
-                    selectCmd.CommandText = $"select * from Alunos where id = {id}";
+                    selectCmd.CommandText = $"select * from Aluno where id = {id}";
                 }
 
 
@@ -70,69 +70,108 @@ namespace WebApp.Models
         }
         public void InserirAlunoDB(Alunos aluno)
         {
-            IDbCommand insertCmd = conexao.CreateCommand();
-            insertCmd.CommandText = "insert into Alunos (nome, sobrenome, telefone, ra, data, descricao) values (@nome, @sobrenome, @telefone, @ra, @data, @descricao)";
+            try
+            {
+                IDbCommand insertCmd = conexao.CreateCommand();
+                insertCmd.CommandText = "insert into Alunos (nome, sobrenome, telefone, ra, data, descricao) values (@nome, @sobrenome, @telefone, @ra, @data, @descricao)";
 
-            IDbDataParameter paramNome = new SqlParameter("nome", aluno.nome);
-            insertCmd.Parameters.Add(paramNome);
+                IDbDataParameter paramNome = new SqlParameter("nome", aluno.nome);
+                insertCmd.Parameters.Add(paramNome);
 
-            IDbDataParameter paramSobrenome = new SqlParameter("sobrenome", aluno.sobrenome);
-            insertCmd.Parameters.Add(paramSobrenome);
+                IDbDataParameter paramSobrenome = new SqlParameter("sobrenome", aluno.sobrenome);
+                insertCmd.Parameters.Add(paramSobrenome);
 
-            IDbDataParameter paramTelefone = new SqlParameter("telefone", aluno.telefone);
-            insertCmd.Parameters.Add(paramTelefone);
+                IDbDataParameter paramTelefone = new SqlParameter("telefone", aluno.telefone);
+                insertCmd.Parameters.Add(paramTelefone);
 
-            IDbDataParameter paramRa = new SqlParameter("ra", aluno.ra);
-            insertCmd.Parameters.Add(paramRa);
+                IDbDataParameter paramRa = new SqlParameter("ra", aluno.ra);
+                insertCmd.Parameters.Add(paramRa);
 
-            IDbDataParameter paramData = new SqlParameter("data", aluno.data);
-            insertCmd.Parameters.Add(paramData);
+                IDbDataParameter paramData = new SqlParameter("data", aluno.data);
+                insertCmd.Parameters.Add(paramData);
 
-            IDbDataParameter paramDescricao = new SqlParameter("descricao", aluno.descricao);
-            insertCmd.Parameters.Add(paramDescricao);
+                IDbDataParameter paramDescricao = new SqlParameter("descricao", aluno.descricao);
+                insertCmd.Parameters.Add(paramDescricao);
 
-            insertCmd.ExecuteNonQuery();
+                insertCmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                conexao.Close();
+            }
+            
         }
 
         public void AtualizarAlunoDB(Alunos aluno)
         {
-            IDbCommand UpdateCmd = conexao.CreateCommand();
-            UpdateCmd.CommandText = "Update Alunos SET nome = @nome, sobrenome = @sobrenome, telefone = @telefone, ra = @ra, data = @data, descricao = @descricao " +
-                "WHERE id = @id";
+            try
+            {
+                IDbCommand UpdateCmd = conexao.CreateCommand();
+                UpdateCmd.CommandText = "Update Alunos SET nome = @nome, sobrenome = @sobrenome, telefone = @telefone, ra = @ra, data = @data, descricao = @descricao " +
+                    "WHERE id = @id";
 
-            IDbDataParameter paramId = new SqlParameter("id", aluno.id);
-            UpdateCmd.Parameters.Add(paramId);
+                IDbDataParameter paramId = new SqlParameter("id", aluno.id);
+                UpdateCmd.Parameters.Add(paramId);
 
-            IDbDataParameter paramNome = new SqlParameter("nome", aluno.nome);
-            UpdateCmd.Parameters.Add(paramNome);
+                IDbDataParameter paramNome = new SqlParameter("nome", aluno.nome);
+                UpdateCmd.Parameters.Add(paramNome);
 
-            IDbDataParameter paramSobrenome = new SqlParameter("sobrenome", aluno.sobrenome);
-            UpdateCmd.Parameters.Add(paramSobrenome);
+                IDbDataParameter paramSobrenome = new SqlParameter("sobrenome", aluno.sobrenome);
+                UpdateCmd.Parameters.Add(paramSobrenome);
 
-            IDbDataParameter paramTelefone = new SqlParameter("telefone", aluno.telefone);
-            UpdateCmd.Parameters.Add(paramTelefone);
+                IDbDataParameter paramTelefone = new SqlParameter("telefone", aluno.telefone);
+                UpdateCmd.Parameters.Add(paramTelefone);
 
-            IDbDataParameter paramRa = new SqlParameter("ra", aluno.ra);
-            UpdateCmd.Parameters.Add(paramRa);
+                IDbDataParameter paramRa = new SqlParameter("ra", aluno.ra);
+                UpdateCmd.Parameters.Add(paramRa);
 
-            IDbDataParameter paramData = new SqlParameter("data", aluno.data);
-            UpdateCmd.Parameters.Add(paramData);
+                IDbDataParameter paramData = new SqlParameter("data", aluno.data);
+                UpdateCmd.Parameters.Add(paramData);
 
-            IDbDataParameter paramDescricao = new SqlParameter("descricao", aluno.descricao);
-            UpdateCmd.Parameters.Add(paramDescricao);
+                IDbDataParameter paramDescricao = new SqlParameter("descricao", aluno.descricao);
+                UpdateCmd.Parameters.Add(paramDescricao);
 
-            UpdateCmd.ExecuteNonQuery();
+                UpdateCmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                conexao.Close();
+            }
+            
         }
 
         public void DeletarAlunoDB(int id)
         {
-            IDbCommand DeleteCmd = conexao.CreateCommand();
-            DeleteCmd.CommandText = "delete from Alunos where id = @id";
+            try
+            {
+                IDbCommand DeleteCmd = conexao.CreateCommand();
+                DeleteCmd.CommandText = "delete from Alunos where id = @id";
 
-            IDbDataParameter paramId = new SqlParameter("id", id);
-            DeleteCmd.Parameters.Add(paramId);
+                IDbDataParameter paramId = new SqlParameter("id", id);
+                DeleteCmd.Parameters.Add(paramId);
 
-            DeleteCmd.ExecuteNonQuery();
+                DeleteCmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                conexao.Close();
+            }
+            
         }
     }
 }
