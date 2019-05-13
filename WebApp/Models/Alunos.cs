@@ -25,51 +25,21 @@ namespace WebApp.Models
         /// deserializa e converte o json para passar a uma lista de alunos.
         /// </summary>
         /// <returns></returns>
-        public List<Alunos> listarAlunos()
+        public List<Alunos> listarAlunos(int? id = null)
         {
-            var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
-
-            var json = File.ReadAllText(caminhoArquivo);
-
-            var listaAlunos = JsonConvert.DeserializeObject<List<Alunos>>(json);
-
-            return listaAlunos;
-        }
-
-
-        public List<Alunos> listarAlunosDB()
-        {
-            //string stringConexao = ConfigurationManager.AppSettings["ConnectionString"];
-            string stringConexao = ConfigurationManager.ConnectionStrings["ConexaoDev"].ConnectionString;
-            IDbConnection conexao;
-                
-            conexao = new SqlConnection(stringConexao);
-            conexao.Open();
-            var listaAlunos = new List<Alunos>();
-            IDbCommand selectCmd = conexao.CreateCommand();
-            selectCmd.CommandText = "select * from Alunos";
-
-            IDataReader resultado = selectCmd.ExecuteReader();
-
-            while (resultado.Read())
+            try
             {
-                var alu = new Alunos();
-                alu.id = Convert.ToInt32(resultado["id"]);
-                alu.nome = Convert.ToString(resultado["nome"]);
-                alu.sobrenome = Convert.ToString(resultado["sobrenome"]);
-                alu.telefone = Convert.ToString(resultado["telefone"]);
-                alu.data = Convert.ToString(resultado["data"]);
-                alu.ra = Convert.ToInt32(resultado["ra"]);
-                alu.descricao = Convert.ToString(resultado["descricao"]);
-
-                listaAlunos.Add(alu);
-
+                var alunoBD = new AlunoDAO();
+                return alunoBD.listarAlunosDB(id);
             }
-            conexao.Close();
-            return listaAlunos;
+            catch (Exception ex)
+            {
+
+                throw new Exception($"Erro ao listar alunos: Erro = {ex.Message}");
+            }
+
+            
         }
-
-
         /// <summary>
         /// Serializable
         /// Uso para serializar o que eu mando na API para o JSON
@@ -91,16 +61,27 @@ namespace WebApp.Models
         /// </summary>
         /// <param name="Aluno"></param>
         /// <returns></returns>
-        public Alunos Inserir(Alunos Aluno)
+        public void Inserir(Alunos aluno)
         {
-            var listaAlunos = this.listarAlunos();
+            //var listaAlunos = this.listarAlunos();
 
-            var maxId = listaAlunos.Max(aluno => aluno.id); // busca o maior ID na minha lista de alunos
-            Aluno.id = maxId + +1;
-            listaAlunos.Add(Aluno);
+            //var maxId = listaAlunos.Max(aluno => aluno.id); // busca o maior ID na minha lista de alunos
+            //Aluno.id = maxId + +1;
+            //listaAlunos.Add(Aluno);
 
-            ReescreverArquivos(listaAlunos);
-            return Aluno;
+            //ReescreverArquivos(listaAlunos);
+            //return Aluno;
+            try
+            {
+                var alunoBD = new AlunoDAO();
+                alunoBD.InserirAlunoDB(aluno);
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"Erro ao inserir aluno: Erro = {ex.Message}");
+            }
+
         }
 
         /// <summary>
@@ -109,23 +90,34 @@ namespace WebApp.Models
         /// <param name="id"></param>
         /// <param name="Aluno"></param>
         /// <returns></returns>
-        public Alunos Atualizar(int id, Alunos Aluno)
+        public void Atualizar(Alunos aluno)
         {
-            var listaAlunos = this.listarAlunos();
+            //var listaAlunos = this.listarAlunos();
 
-            var itemIndex = listaAlunos.FindIndex(p => p.id == id); //se ele encontrar num index o aluno que estou passando (ID)
-            if (itemIndex >= 0)
-            {
-                Aluno.id = id;
-                listaAlunos[itemIndex] = Aluno; //substitui alguma propriedade do aluno com um objeto que estou enviando
-            }
-            else
-            {
-                return null;
-            }
+            //var itemIndex = listaAlunos.FindIndex(p => p.id == id); //se ele encontrar num index o aluno que estou passando (ID)
+            //if (itemIndex >= 0)
+            //{
+            //    Aluno.id = id;
+            //    listaAlunos[itemIndex] = Aluno; //substitui alguma propriedade do aluno com um objeto que estou enviando
+            //}
+            //else
+            //{
+            //    return null;
+            //}
 
-            ReescreverArquivos(listaAlunos);
-            return Aluno;
+            //ReescreverArquivos(listaAlunos);
+            //return Aluno;
+
+            try
+            {
+                var alunoBD = new AlunoDAO();
+                alunoBD.AtualizarAlunoDB(aluno);
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"Erro ao atualizar aluno: Erro = {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -133,22 +125,31 @@ namespace WebApp.Models
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool Deletar(int id)
+        public void Deletar(int id)
         {
-            var listaAluno = this.listarAlunos();
+            //var listaAluno = this.listarAlunos();
 
-            var itemIndex = listaAluno.FindIndex(p => p.id == id);
-            if (itemIndex >= 0)
+            //var itemIndex = listaAluno.FindIndex(p => p.id == id);
+            //if (itemIndex >= 0)
+            //{
+            //    listaAluno.RemoveAt(itemIndex);
+            //}
+            //else
+            //{
+            //    return false;
+            //}
+            //ReescreverArquivos(listarAlunos());
+            //return true;
+            try
             {
-                listaAluno.RemoveAt(itemIndex);
+                var alunoBD = new AlunoDAO();
+                alunoBD.DeletarAlunoDB(id);
             }
-            else
+            catch (Exception ex)
             {
-                return false;
-            }
-            ReescreverArquivos(listarAlunos());
-            return true;
 
+                throw new Exception($"Erro ao Deletar aluno: Erro = {ex.Message}");
+            }
         }
     }
 }
