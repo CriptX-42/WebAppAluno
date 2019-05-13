@@ -20,7 +20,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                Alunos aluno = new Alunos();
+                AlunosModel aluno = new AlunosModel();
                 return Ok(aluno.listarAlunos());
             }
             catch (Exception ex)
@@ -34,9 +34,9 @@ namespace WebApp.Controllers
         // GET: api/Aluno/5
         [HttpGet]
         [Route("Recuperar/{id}")]
-        public Alunos Get(int id)
+        public AlunoDTO Get(int id)
         {
-            Alunos aluno = new Alunos();
+            AlunosModel aluno = new AlunosModel();
             return aluno.listarAlunos(id).FirstOrDefault();
         }
 
@@ -46,8 +46,8 @@ namespace WebApp.Controllers
         {
             try
             {
-                Alunos aluno = new Alunos();
-                IEnumerable<Alunos> alunos = aluno.listarAlunos().Where(x => x.data == data && x.nome == nome);
+                AlunosModel aluno = new AlunosModel();
+                IEnumerable< AlunoDTO> alunos = aluno.listarAlunos().Where(x => x.data == data && x.nome == nome);
                 if (!alunos.Any())
                 {
                     return NotFound();
@@ -62,11 +62,11 @@ namespace WebApp.Controllers
             
         }
         [HttpPost]
-        public IHttpActionResult Post(Alunos aluno)
+        public IHttpActionResult Post(AlunoDTO aluno)
         {
             try
             {
-                Alunos _aluno = new Alunos();
+                AlunosModel _aluno = new AlunosModel();
                 _aluno.Inserir(aluno);
                 return Ok(_aluno.listarAlunos());
             }
@@ -80,11 +80,11 @@ namespace WebApp.Controllers
 
         // PUT: api/Aluno/5
         [HttpPut]
-        public IHttpActionResult Put(int id, [FromBody]Alunos aluno)
+        public IHttpActionResult Put(int id, [FromBody]AlunoDTO aluno)
         {
             try
             {
-                Alunos _aluno = new Alunos();
+                AlunosModel _aluno = new AlunosModel();
                 aluno.id = id;
                 _aluno.Atualizar(aluno);
                 return Ok(_aluno.listarAlunos(id).FirstOrDefault());
@@ -103,7 +103,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                Alunos _aluno = new Alunos();
+                AlunosModel _aluno = new AlunosModel();
                 _aluno.Deletar(id);
                 return Ok("Deletado com Sucesso!");
             }
