@@ -34,15 +34,37 @@ namespace WebApp.Models
 
             return listaAlunos;
         }
-        public string stringConexao = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=~/App_Data/Database.mdf;Integrated Security=True";
-        public IDbConnection conexao;
+        
 
         public List<Alunos> listarAlunosDB()
         {
+            string stringConexao = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\Git\CriptX\WebAppAluno\WebApp\App_Data\Database.mdf;Integrated Security=True";
+            
+            IDbConnection conexao;
+                
             conexao = new SqlConnection(stringConexao);
+            conexao.Open();
             var listaAlunos = new List<Alunos>();
+            IDbCommand selectCmd = conexao.CreateCommand();
+            selectCmd.CommandText = "select * from Alunos";
 
+            IDataReader resultado = selectCmd.ExecuteReader();
 
+            while (resultado.Read())
+            {
+                var alu = new Alunos();
+                alu.id = Convert.ToInt32(resultado["id"]);
+                alu.nome = Convert.ToString(resultado["nome"]);
+                alu.sobrenome = Convert.ToString(resultado["sobrenome"]);
+                alu.telefone = Convert.ToString(resultado["telefone"]);
+                alu.data = Convert.ToString(resultado["data"]);
+                alu.ra = Convert.ToInt32(resultado["ra"]);
+                alu.descricao = Convert.ToString(resultado["descricao"]);
+
+                listaAlunos.Add(alu);
+
+            }
+            conexao.Close();
             return listaAlunos;
         }
 

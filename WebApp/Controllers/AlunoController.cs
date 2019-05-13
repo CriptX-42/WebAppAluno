@@ -21,7 +21,7 @@ namespace WebApp.Controllers
             try
             {
                 Alunos aluno = new Alunos();
-                return Ok(aluno.listarAlunos());
+                return Ok(aluno.listarAlunosDB());
             }
             catch (Exception ex)
             {
