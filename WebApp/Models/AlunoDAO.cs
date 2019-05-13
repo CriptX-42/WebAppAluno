@@ -23,36 +23,50 @@ namespace WebApp.Models
 
         public List<Alunos> listarAlunosDB(int? id)
         {
-
-            var listaAlunos = new List<Alunos>();
-            IDbCommand selectCmd = conexao.CreateCommand();
-            if(id == null){
-                selectCmd.CommandText = "select * from Alunos";
-            }
-            else
+            try
             {
-                selectCmd.CommandText = $"select * from Alunos where id = {id}";
+                var listaAlunos = new List<Alunos>();
+                IDbCommand selectCmd = conexao.CreateCommand();
+                if (id == null)
+                {
+                    selectCmd.CommandText = "select * from Alunos";
+                }
+                else
+                {
+                    selectCmd.CommandText = $"select * from Alunos where id = {id}";
+                }
+
+
+                IDataReader resultado = selectCmd.ExecuteReader();
+
+                while (resultado.Read())
+                {
+                    var alu = new Alunos();
+                    alu.id = Convert.ToInt32(resultado["id"]);
+                    alu.nome = Convert.ToString(resultado["nome"]);
+                    alu.sobrenome = Convert.ToString(resultado["sobrenome"]);
+                    alu.telefone = Convert.ToString(resultado["telefone"]);
+                    alu.data = Convert.ToString(resultado["data"]);
+                    alu.ra = Convert.ToInt32(resultado["ra"]);
+                    alu.descricao = Convert.ToString(resultado["descricao"]);
+
+                    listaAlunos.Add(alu);
+
+                }
+
+                return listaAlunos;
             }
+            catch (Exception ex)
+            {
+
+                throw new Exception (ex.Message);
+            }
+            finally
+            {
+                conexao.Close();
+            }
+
             
-
-            IDataReader resultado = selectCmd.ExecuteReader();
-
-            while (resultado.Read())
-            {
-                var alu = new Alunos();
-                alu.id = Convert.ToInt32(resultado["id"]);
-                alu.nome = Convert.ToString(resultado["nome"]);
-                alu.sobrenome = Convert.ToString(resultado["sobrenome"]);
-                alu.telefone = Convert.ToString(resultado["telefone"]);
-                alu.data = Convert.ToString(resultado["data"]);
-                alu.ra = Convert.ToInt32(resultado["ra"]);
-                alu.descricao = Convert.ToString(resultado["descricao"]);
-
-                listaAlunos.Add(alu);
-
-            }
-            conexao.Close();
-            return listaAlunos;
         }
         public void InserirAlunoDB(Alunos aluno)
         {
