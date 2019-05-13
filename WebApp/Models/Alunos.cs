@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -34,12 +35,12 @@ namespace WebApp.Models
 
             return listaAlunos;
         }
-        
+
 
         public List<Alunos> listarAlunosDB()
         {
-            string stringConexao = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\Git\CriptX\WebAppAluno\WebApp\App_Data\Database.mdf;Integrated Security=True";
-            
+            //string stringConexao = ConfigurationManager.AppSettings["ConnectionString"];
+            string stringConexao = ConfigurationManager.ConnectionStrings["ConexaoDev"].ConnectionString;
             IDbConnection conexao;
                 
             conexao = new SqlConnection(stringConexao);
