@@ -36,7 +36,7 @@ namespace WebApp.Models
                     selectCmd.CommandText = $"select * from Aluno where id = {id}";
                 }
 
-
+                
                 IDataReader resultado = selectCmd.ExecuteReader();
 
                 while (resultado.Read())

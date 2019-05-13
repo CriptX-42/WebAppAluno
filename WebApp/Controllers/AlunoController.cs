@@ -11,6 +11,7 @@ namespace WebApp.Controllers
 {
     [EnableCors("*", "*", "*")]
     [RoutePrefix("api/Aluno")]
+
     public class AlunoController : ApiController
     {
         // GET: api/Aluno
@@ -64,6 +65,10 @@ namespace WebApp.Controllers
         [HttpPost]
         public IHttpActionResult Post(AlunoDTO aluno)
         {
+            if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            
             try
             {
                 AlunosModel _aluno = new AlunosModel();

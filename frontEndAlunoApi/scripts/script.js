@@ -53,19 +53,36 @@ function Cancelar(){
     $('#myModal').modal('hide')
 }
 
-function carregaEstudantes(){
-    tbody.innerHTML = '';
-    var xhr = new XMLHttpRequest();
-    
-    xhr.open(`GET`, `http://localhost:52702/api/Aluno/`, true);
-    xhr.onload = function (){
-        var estudantes = JSON.parse(this.responseText);
-        for(var i in estudantes){
-            adicionaLinha(estudantes[i])
-        }
-    }
-    console.log("teste")
-    xhr.send();
+function carregaEstudantes() {
+	tbody.innerHTML = '';
+
+	var xhr = new XMLHttpRequest();
+
+	xhr.open(`GET`, `http://localhost:26949/api/Aluno/Recuperar`, true); 
+	xhr.setRequestHeader('Authorization', sessionStorage.getItem('token'));   
+
+	xhr.onerror = function () {
+		console.error('ERRO', xhr.readyState);
+	}
+
+	xhr.onreadystatechange = function() {
+		if (this.readyState == 4){
+			if(this.status == 200) {
+				var estudantes = JSON.parse(this.responseText);
+				for(var indice in estudantes){
+					adicionaLinha(estudantes[indice]);
+				}
+			}
+			else if(this.status == 500){
+				var erro = JSON.parse(this.responseText);
+				console.log(erro.message);
+				console.log(erro.exceptionMessage);
+			}
+		}
+		
+	}
+
+	xhr.send();	
 }
 
 function salvarEstudantes(metodo, id, corpo){
