@@ -12,7 +12,7 @@ namespace WebApp
             return new List<Usuario>
             {
                 new Usuario { Nome = "ricardo", Senha = "123456789" },
-            }
+            };
         }
     }
     public class Usuario

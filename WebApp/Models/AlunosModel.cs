@@ -17,7 +17,7 @@ namespace WebApp.Models
             try
             {
                 var alunoBD = new AlunoDAO();
-                return alunoBD.listarAlunosDB(id);
+                return alunoBD.ListarAlunosDB(id);
             }
             catch (Exception ex)
             {
