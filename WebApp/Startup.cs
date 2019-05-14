@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
+using Microsoft.Owin.Security.OAuth;
 using Owin;
 using Swashbuckle.Application;
 
@@ -30,8 +31,23 @@ namespace WebApp
             config.EnableSwagger(c => { c.SingleApiVersion("v1", "WebApp");
                 c.IncludeXmlComments(AppDomain.CurrentDomain.BaseDirectory + @"bin\WebApp.xml");
             });
+            AtivandoAcessTokens(app);
             app.UseCors(CorsOptions.AllowAll);
             app.UseWebApi(config);
+        }
+
+        private void AtivandoAcessTokens(IAppBuilder app)
+        {
+            var opcoesConfiguracaoToken = new OAuthAuthorizationServerOptions()
+            {
+                AllowInsecureHttp = true,
+                TokenEndpointPath = new PathString("/token"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromHours(1),
+                Provider = new ProviderDeTokenDeAcesso()
+                
+            };
+            app.UseOAuthAuthorizationServer(opcoesConfiguracaoToken);
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
         }
     }
 }
