@@ -74,7 +74,7 @@ function salvarEstudantes(metodo, id, corpo){
     if(id === undefined || id === 0){
         id = '';
     }
-    xhr.open(`POST`, `http://localhost:52702/api/Aluno/${id}`, false);
+    xhr.open(`POST`, `http://localhost:26949/api/Aluno/${id}`, false);
     
     
     xhr.setRequestHeader('content-type', 'application/json');
@@ -89,7 +89,7 @@ function excluirEstudante(id){
     if(id === undefined || id === 0){
         id = '';
     }
-    xhr.open(`Delete`, `http://localhost:52702/api/Aluno/${id}`, false);
+    xhr.open(`Delete`, `http://localhost:26949/api/Aluno/${id}`, false);
     xhr.send();
 }
 
