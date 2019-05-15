@@ -57,7 +57,7 @@
     var verificar = function() {
       var xhr = new XMLHttpRequest();
       
-      xhr.open(`GET`, `http://localhost:50221/api/Aluno/Recuperar`, true);    
+      xhr.open(`GET`, `http://localhost:26949/api/Aluno/Recuperar`, true);    
       xhr.setRequestHeader('Authorization', sessionStorage.getItem('token'));
 
       xhr.onerror = function () {
