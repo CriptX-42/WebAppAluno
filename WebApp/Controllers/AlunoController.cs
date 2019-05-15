@@ -8,7 +8,7 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
-    [EnableCors("*", "*", "*")]
+    
     [RoutePrefix("api/Aluno")]
 
     public class AlunoController : ApiController
@@ -16,7 +16,7 @@ namespace WebApp.Controllers
         // GET: api/Aluno
         [HttpGet]
         [Route("Recuperar")]
-        [Authorize]
+        [Authorize(Roles = Funcao.Professor)]
         public IHttpActionResult Get()
         {
             try

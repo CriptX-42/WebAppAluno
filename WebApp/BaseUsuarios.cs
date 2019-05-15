@@ -11,7 +11,7 @@ namespace WebApp
         {
             return new List<Usuario>
             {
-                new Usuario { Nome = "ricardo", Senha = "123456789" },
+                new Usuario { Nome = "ricardo", Senha = "123456789", Funcoe= new string[] { Funcao.Admin } },
             };
         }
     }
@@ -19,5 +19,12 @@ namespace WebApp
     {
         public string Nome { get; set; }
         public string Senha { get; set; }
+        public string[] Funcoe { get; set; }
+    }
+    public class Funcao
+    {
+        public const string Aluno = "Aluno";
+        public const string Professor = "Aluno";
+        public const string Admin = "Aluno";
     }
 }
